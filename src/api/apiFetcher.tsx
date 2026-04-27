@@ -1,8 +1,10 @@
-export async function apiFetch<T>(url : string, options?: RequestInit): Promise<T | void> {
+export async function apiFetch<T>(url : string, options?: RequestInit): Promise<T> {
+    const token = localStorage.getItem("token");
     const res = await fetch(url, {
         headers : {
             "Content-Type": "application/json",
-            ...(options?.headers || {})
+            ...(options?.headers || {}),
+            ...(token ? {Authorization : `Bearer ${token}`} : {})
         },
         ...options
     });
@@ -12,9 +14,6 @@ export async function apiFetch<T>(url : string, options?: RequestInit): Promise<
 
         throw new Error(
             errorData?.error || "Необработанная ошибка");
-    }
-    if(res.status == 204) {
-         return undefined;
     }
     return res.json();
 }
