@@ -33,3 +33,9 @@
     border: 2px solid #181864;
     background-color: #212135;
 }
+.submitButton:focus{
+    border: 1px solid rgb(30, 30, 138);;
+}
+.submitButton:hover {
+    border: 1px solid rgb(30, 30, 138);;
+}
