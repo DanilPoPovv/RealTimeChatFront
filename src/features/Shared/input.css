@@ -1,0 +1,8 @@
+.input {
+    background-color: #212135;
+    border: none;
+}
+
+input:hover {
+     border: 1px solid blue;
+}
