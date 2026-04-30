@@ -1,4 +1,4 @@
-import "./ChatComponents.css"
+import "./styles/ChatWindow.css"
 import type { Message } from "../../../entities/chat/types"
 import MessageComponent from "./Message"
 type chatWindowProps = {

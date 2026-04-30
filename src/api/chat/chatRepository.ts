@@ -1,13 +1,16 @@
 import  { apiFetch } from "../apiFetcher";
 import type { Chat } from "../../entities/chat/types";
 
-type GetUserChatsResponse = {
-    chats : Chat[];
-};
 
 export function getUserChats() {
-    return apiFetch<GetUserChatsResponse>("https://localhost:7110/api/chats", {
+    return apiFetch<Chat[]>("https://localhost:7110/api/chats/GetChatUser", {
         method: "GET",
     });
-    
+}
+
+export function searchChats(chatName : string){
+    return apiFetch<Chat[]>(`https://localhost:7110/api/chats/SearchChat?chatName=${chatName}`,
+        {
+            method : "Get",});
+
 }

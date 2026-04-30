@@ -1,5 +1,5 @@
 import type { Message } from "../../../entities/chat/types"
-import "./ChatComponents.css";
+import "./styles/ChatWindow.css"
 type messageProps = {
     message: Message;
     messageSender: string;

@@ -1,31 +1,9 @@
-.chatList {
-    height: 100vh;
-    width: 27%;
-    box-sizing: border-box;
-    padding-left: 0px;
-    background-color: rgb(3, 32, 58);
-}
-
-.chatItem {
-    width: 100%;
-    height: 7%;
-    box-sizing: border-box;
-    border: 1px solid transparent;
-    padding: 10px;
-}
-
-.chatItem:hover {
-    border: 1px solid rgb(30, 30, 138);
-}
-
-
 .chatWindow {
     background-color: rgb(25, 67, 104);
     flex : 1;
     display: inline;
     padding-left: 15px;
 }
-
 
 .message {
     position: relative;

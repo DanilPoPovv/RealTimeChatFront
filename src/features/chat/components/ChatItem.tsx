@@ -1,5 +1,5 @@
 import type { Chat } from "../../../entities/chat/types";
-import "./ChatComponents.css";
+import "./styles/ChatList.css";
 type ChatItemProps = {
     chat : Chat;
     chatId : number;
@@ -7,7 +7,7 @@ type ChatItemProps = {
 }
 export default function ChatItem( {chat, onClick, chatId} : ChatItemProps) {
     return (
-        <div className="chatItem" onClick={() => onClick(chatId)}>{chat.id}
+        <div className="chatItem" onClick={() => onClick(chatId)}>
              {chat.name}</div>
     )
 }
