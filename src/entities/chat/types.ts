@@ -5,7 +5,7 @@ export type Chat = {
 
 export type Message = {
     id : number;
-    createdAt : Date;
+    createdAt : string;
     text : string;
     user : {
         id: number;

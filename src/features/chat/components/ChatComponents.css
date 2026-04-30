@@ -29,26 +29,52 @@
 
 .message {
     position: relative;
+    display: inline;
     width: 70%;
-    height: 90%;
+    height: 60%;
     background-color: #2b5278;
+    padding-left: 10px;
+    box-sizing: border-box;
+    color: rgb(3, 13, 22);
+    width: fit-content;
+    min-width: 100px;
+    padding-bottom: 5px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    padding-bottom: 16px;
 }
 .messageBox {
     display: inline;
     justify-content: flex-end;
     width: 150px;
-    height: 100px;
-    border: 5px solid red;
+    height: fit-content;
+    min-height: 60px;
     display: flex;
     box-sizing: border-box;
+    padding: 2px;
 }
 .message::after {
     content: "";
     position: absolute;
-    left: -7px;
-    bottom: 3px;
+    left: -6px;
+    bottom: 2.5px;
     width: 12px;
     height: 12px;
     background: #2b5278;
     transform: rotate(45deg);
+}
+
+.messageSender {
+    padding-bottom: 5px;
+    font-weight: 800;
+    color: rgb(45, 154, 248);
+}
+
+.messageDate {
+    position: absolute;
+    font-size: 11.5px;
+    right: 8px;
+    bottom: 4px;
+    align-self: flex-end;
 }
