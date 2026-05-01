@@ -12,10 +12,12 @@ export default function ChatPage(){
             setChats(data);
         })
     },[]);
+
     const [currentChatMessage,setCurrentChatMessage] = useState<Message[]>([]);
     async function chatClickHandler(chatId : number) {
         setCurrentChatMessage(await getChatMessages(chatId));
     }
+
     const [currentChatSearch, setCurrentChatSearch] = useState<string>("");
     async function performSearch(keyName : string){
         if(keyName === "Enter" && currentChatSearch){
@@ -23,11 +25,22 @@ export default function ChatPage(){
             setChats(searchedChats);
         }
     }
+
+    async function chatSearchChangeHandler(chatName:string) {
+        if(chatName === ""){
+            ///Эту штуку надо мемоизировать по хорошему. и когда то убрать дублирование.
+        getUserChats().then((data) =>{
+            setChats(data);
+        })}
+        else {
+            setCurrentChatSearch(chatName)
+        }
+    }
     return(
         <div style={{display : "flex"}}>
             <ChatList chats={chats} 
             onChatClicked={chatClickHandler} 
-            onChatSearchChange={setCurrentChatSearch}
+            onChatSearchChange={chatSearchChangeHandler}
             onChatSearhEnterDown={performSearch}
             />
             <ChatWindow messages={currentChatMessage}/>
