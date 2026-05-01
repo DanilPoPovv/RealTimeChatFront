@@ -1,36 +1,42 @@
 .chatWindow {
     background-color: rgb(25, 67, 104);
     flex : 1;
-    display: inline;
-    padding-left: 15px;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
 }
 
 .message {
     position: relative;
-    display: inline;
-    width: 70%;
+    max-width: 70%;
     height: 60%;
     background-color: #2b5278;
     padding-left: 10px;
+    padding-right: 5px;
+    padding-bottom: 16px;
     box-sizing: border-box;
     color: rgb(3, 13, 22);
     width: fit-content;
+    height: fit-content;
     min-width: 100px;
-    padding-bottom: 5px;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;
-    padding-bottom: 16px;
 }
 .messageBox {
-    display: inline;
-    justify-content: flex-end;
-    width: 150px;
+    width: 100%;
+    display: flex;
+    min-width: 150px;
     height: fit-content;
     min-height: 60px;
     display: flex;
     box-sizing: border-box;
-    padding: 2px;
+    padding-left: 40px;
+    margin-bottom: 2px;
+}
+.messageContainer {
+    float: 1;
+    overflow-y: auto;
 }
 .message::after {
     content: "";
@@ -56,3 +62,16 @@
     bottom: 4px;
     align-self: flex-end;
 }
+
+.messageInputBox {
+    box-sizing: border-box;
+    margin-left: 0px;
+    padding-left: 0px;
+        padding: 10px;
+}
+
+.messageInput {
+    box-sizing: border-box;
+    width: 100%;
+}
+

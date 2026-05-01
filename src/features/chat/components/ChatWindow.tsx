@@ -1,6 +1,7 @@
 import "./styles/ChatWindow.css"
 import type { Message } from "../../../entities/chat/types"
 import MessageComponent from "./Message"
+import MessageInput from "./MessageInput"
 type chatWindowProps = {
     messages : Message[];
 }
@@ -15,12 +16,16 @@ function formatDate(date: string): string {
 }
 
     return ( 
+
     <div className="chatWindow">
+        <div className="messageContainer">
         {messages && messages.map((m) => <MessageComponent 
         key={m.id} 
         message={m} 
         messageSender={m.user.name}
         messageDate={formatDate(m.createdAt)}/>)}
+        </div>
+        <MessageInput/>
     </div>
     )
 }
