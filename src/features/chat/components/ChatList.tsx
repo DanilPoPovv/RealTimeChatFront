@@ -13,7 +13,7 @@ export default function ChatList(chatListProps : ChatListProps){
     <div className="chatList">
         <ChatSearchLabel 
         onChatSearchChange={chatListProps.onChatSearchChange}
-        onChatSearhEnterDown={chatListProps.onChatSearhEnterDown}/>
+        onEnterKeyDown={chatListProps.onChatSearhEnterDown}/>
         {chatListProps.chats.map(
             (c) => 
             <ChatItem 
