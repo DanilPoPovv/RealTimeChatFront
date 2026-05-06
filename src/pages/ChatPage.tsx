@@ -10,7 +10,6 @@ export default function ChatPage() {
     const [chatId, serCurrentChatId] = useState<number | null>(null);
     const {chats,
         searchChatsHandler,
-        setSearchValue,
         chatSearchChangeHandler
         } = useChats();
     
