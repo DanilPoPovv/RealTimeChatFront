@@ -4,10 +4,12 @@ type ChatItemProps = {
     chat : Chat;
     chatId : number;
     onClick : (chatId : number) => Promise<void>;
+    isSelected : boolean;
 }
-export default function ChatItem( {chat, onClick, chatId} : ChatItemProps) {
+export default function ChatItem( {chat, onClick, chatId, isSelected} : ChatItemProps) {
     return (
-        <div className="chatItem" onClick={() => onClick(chatId)}>
+        <div className={`chatItem ${isSelected ? "selected" : ""}`}
+         onClick={() => onClick(chatId)}>
              {chat.name}</div>
     )
 }

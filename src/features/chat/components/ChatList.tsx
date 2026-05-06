@@ -7,6 +7,7 @@ type ChatListProps = {
     onChatClicked : (chatId : number) => Promise<void>;
     onChatSearchChange : (chatName : string) => void;
     onChatSearhEnterDown : (keyName : string) => void;
+    selectedChatId : number | null ;
 }
 export default function ChatList(chatListProps : ChatListProps){
     return (
@@ -17,6 +18,7 @@ export default function ChatList(chatListProps : ChatListProps){
         {chatListProps.chats.map(
             (c) => 
             <ChatItem 
+            isSelected={c.id === chatListProps.selectedChatId}
             key={c.id} 
             chat={c}
             chatId={c.id}

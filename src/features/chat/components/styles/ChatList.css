@@ -13,7 +13,9 @@
     border: 1px solid transparent;
     padding: 10px;
 }
-
+.chatItem.selected {
+    background-color: #0f2b46;
+}
 .chatItem:hover {
     border: 1px solid rgb(30, 30, 138);
 }

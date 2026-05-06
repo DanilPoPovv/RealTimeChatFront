@@ -1,6 +1,6 @@
 import ChatWindow from "../features/chat/components/ChatWindow"
 import ChatList from "../features/chat/components/ChatList"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { signalRService } from "../api/signalR/signalRService";
 import { useChats } from "../features/hooks/useChat";
 import { useChatMessage } from "../features/hooks/useChatMessages";
@@ -25,7 +25,11 @@ export default function ChatPage() {
             return;
         addChatMessage(message);
     });
+    useEffect(() => {
+
+    },[chatId])
     async function chatClickHandler(chatId: number) {
+
         await loadChatMessages(chatId)
         await signalRService.joinChat(chatId); 
         serCurrentChatId(chatId);
@@ -48,6 +52,7 @@ export default function ChatPage() {
     return (
         <div style={{ display: "flex" }}>
             <ChatList chats={chats}
+                selectedChatId={chatId}
                 onChatClicked={chatClickHandler}
                 onChatSearchChange={chatSearchChangeHandler}
                 onChatSearhEnterDown={searchChats}
