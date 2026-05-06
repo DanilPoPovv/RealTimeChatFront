@@ -1,66 +1,49 @@
 import ChatWindow from "../features/chat/components/ChatWindow"
 import ChatList from "../features/chat/components/ChatList"
-import { useEffect, useState } from "react"
-import type { Chat } from "../entities/chat/types";
-import { getUserChats, searchChats } from "../api/chat/chatRepository";
-import type { Message } from "../entities/chat/types";
-import { getChatMessages, sendMessage } from "../api/message/messageRepository";
+import { useState } from "react"
 import { signalRService } from "../api/signalR/signalRService";
+import { useChats } from "../features/hooks/useChat";
+import { useChatMessage } from "../features/hooks/useChatMessages";
+import { useChatSignalR } from "../features/hooks/useChatSignalR";
+import type { Message } from "../entities/chat/types";
 export default function ChatPage() {
-    const [currentChatId, serCurrentChatId] = useState<number | null>(null);
-    const [currentChatMessage, setCurrentChatMessage] = useState<Message[]>([]);
-    const [currentChatSearch, setCurrentChatSearch] = useState<string>("");
-    const [messageInputText, setMessageInputText] = useState<string>("");
-    const [chats, setChats] = useState<Chat[]>([]);
-    useEffect(() => {
-        getUserChats().then((data) => {
-            setChats(data);
-            subscribeAllChatEvents();
-        })
-    }, []);
-    async function subscribeAllChatEvents(){
-        await signalRService.start();
-        signalRService.offReceiveMessage();
-        await signalRService.onReceiveMessage((message) =>{
-            setCurrentChatMessage(prev => [...prev, message])
-        });
-    }
+    const [chatId, serCurrentChatId] = useState<number | null>(null);
+    const {chats,
+        searchChatsHandler,
+        setSearchValue,
+        chatSearchChangeHandler
+        } = useChats();
+    
+    const {
+        messages,
+        setMessageText,
+        loadChatMessages,
+        sendChatMessage,
+        addChatMessage
+    } = useChatMessage();
+    useChatSignalR((message : Message) => {
+        if (message.chatId !== chatId)
+            return;
+        addChatMessage(message);
+    });
     async function chatClickHandler(chatId: number) {
-        setCurrentChatMessage(await getChatMessages(chatId));
+        await loadChatMessages(chatId)
         await signalRService.joinChat(chatId); 
         serCurrentChatId(chatId);
     }
 
-    async function performSearch(keyName: string) {
-        if (isKeyEnter(keyName) && currentChatSearch) {
-            var searchedChats = await searchChats(currentChatSearch);
-            setChats(searchedChats);
-        }
-    }
 
     async function sendMessageEnterDown(keyName: string) {
-        if (isKeyEnter(keyName)) {
-            if (currentChatId) {
-                await sendMessage(currentChatId, messageInputText); 
-                setMessageInputText("");
+        if ((keyName === "Enter")) {
+            if (chatId) {
+                await sendChatMessage(chatId)
              }
         }
     }
-    function isKeyEnter(keyName: string): boolean {
-        if (keyName === "Enter")
-            return true;
-        return false;
-    }
-    async function chatSearchChangeHandler(chatName: string) {
-        if (chatName === "") {
-            ///TODO: Эту штуку надо мемоизировать по хорошему. и когда то убрать дублирование.
-            getUserChats().then((data) => {
-                setChats(data);
-            })
-            setCurrentChatSearch("");
-        }
-        else {
-            setCurrentChatSearch(chatName)
+
+    async function searchChats(keyName:string) {
+        if((keyName === "Enter")){
+            await searchChatsHandler();
         }
     }
     return (
@@ -68,14 +51,14 @@ export default function ChatPage() {
             <ChatList chats={chats}
                 onChatClicked={chatClickHandler}
                 onChatSearchChange={chatSearchChangeHandler}
-                onChatSearhEnterDown={performSearch}
+                onChatSearhEnterDown={searchChats}
             />
             <ChatWindow
-                messages={currentChatMessage}
-                onInputMessageChange={setMessageInputText}
+                messages={messages}
+                onInputMessageChange={setMessageText}
                 onMessageSend={() => {
-                    if (currentChatId)
-                        sendMessage(currentChatId, messageInputText);
+                    if (chatId){
+                         sendChatMessage(chatId)}
                 }}
                 onEnterKeyDown={sendMessageEnterDown}
             />

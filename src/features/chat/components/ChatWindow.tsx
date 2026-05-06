@@ -14,10 +14,8 @@ const containerRef = useRef<HTMLDivElement | null>(null);
 
 useEffect(() => {
     const el = containerRef.current;
-    console.log(el);
     if (el) {
         el.scrollTop = el.scrollHeight;
-        console.log(12333)
     }
 }, [messages]);
 function formatDate(date: string): string {

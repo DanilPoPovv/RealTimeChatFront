@@ -27,7 +27,6 @@ class SignalRService {
   onReceiveMessage(callback: (message: Message) => void) {
     this.connection.on("ReceiveMessage", callback);
   }
-
 }
 
 export const signalRService = new SignalRService();
