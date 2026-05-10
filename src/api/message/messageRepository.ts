@@ -1,4 +1,4 @@
-import type { Message } from "../../entities/chat/types";
+import type { Message } from "../../entities/chat/domainTypes";
 import  { apiFetch } from "../apiFetcher";
 
 export function getChatMessages(chatId : number) {

@@ -1,6 +1,6 @@
 import "./styles/ChatWindow.css"
-import type { Message } from "../../../entities/chat/types"
-import MessageComponent from "./Message"
+import type { Message } from "../../../entities/chat/domainTypes"
+import MessageComponent from "./MessageComponent"
 import MessageInput from "./MessageInput"
 import { useRef, useEffect } from "react"
 type chatWindowProps = {
@@ -8,8 +8,9 @@ type chatWindowProps = {
     onMessageSend : () =>  void;
     onEnterKeyDown : (keyName : string) => void;
     onInputMessageChange : (message : string) => void;
+    onMessageRightClick : (chatId : number) => void;
 }
-export default function ChatWindow( {messages, onMessageSend, onEnterKeyDown, onInputMessageChange} : chatWindowProps){
+export default function ChatWindow( {messages, onMessageSend, onEnterKeyDown, onInputMessageChange, onMessageRightClick} : chatWindowProps){
 const containerRef = useRef<HTMLDivElement | null>(null);
 
 useEffect(() => {
@@ -32,6 +33,7 @@ function formatDate(date: string): string {
     <div className="chatWindow">
         <div ref={containerRef} className="messageContainer">
         {messages && messages.map((m) => <MessageComponent 
+        onMessageRightClick={onMessageRightClick}
         key={m.id} 
         message={m} 
         messageSender={m.user.name}

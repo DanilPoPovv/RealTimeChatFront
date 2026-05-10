@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { signalRService } from "../../api/signalR/signalRService";
-import type { Message } from "../../entities/chat/types";
+import type { Message } from "../../entities/chat/domainTypes";
 
 export function useChatSignalR(
     messageUpdateCallback: (message: Message) => void) {

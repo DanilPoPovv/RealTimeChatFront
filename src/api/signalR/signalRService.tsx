@@ -1,5 +1,5 @@
 import * as signalR from "@microsoft/signalr";
-import type { Message } from "../../entities/chat/types";
+import type { Message } from "../../entities/chat/domainTypes";
 
 class SignalRService {
   connection = new signalR.HubConnectionBuilder()

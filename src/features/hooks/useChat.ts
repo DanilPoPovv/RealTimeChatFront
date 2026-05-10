@@ -1,5 +1,5 @@
 import { useEffect,useRef,useState } from "react";
-import type { Chat } from "../../entities/chat/types";
+import type { Chat } from "../../entities/chat/domainTypes";
 import { getUserChats, searchChats } from "../../api/chat/chatRepository";
 export function useChats(){
     const [chats, setChats] = useState<Chat[]>([]);

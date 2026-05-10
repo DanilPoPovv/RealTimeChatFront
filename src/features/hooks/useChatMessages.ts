@@ -1,10 +1,9 @@
-import type { Message } from "../../entities/chat/types";
+import type { Message } from "../../entities/chat/domainTypes";
 import { useState } from "react";
 import { getChatMessages,sendMessage } from "../../api/message/messageRepository";
 export function useChatMessage() {
     const [messages, setMessages] = useState<Message[]>([]);
     const [messageText, setMessageText] = useState<string>("");
-
     async function loadChatMessages(chatId : number) {
         setMessages(await getChatMessages(chatId));
     }
@@ -17,15 +16,16 @@ export function useChatMessage() {
     }
 
     async function addChatMessage(message: Message) {
-        console.log("1231")
         setMessages((prev) => [...prev, message]);
     }
+
+
     return {
         messages,
         setMessageText,
         loadChatMessages,
         sendChatMessage,
         setMessages,
-        addChatMessage
+        addChatMessage,
     }
 }

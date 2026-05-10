@@ -1,4 +1,4 @@
-import type{ Chat } from "../../../entities/chat/types"
+import type{ Chat } from "../../../entities/chat/domainTypes"
 import ChatItem from "./ChatItem"
 import ChatSearchLabel from "./ChatSearchLabel";
 import "./styles/ChatList.css";

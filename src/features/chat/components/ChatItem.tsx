@@ -1,4 +1,4 @@
-import type { Chat } from "../../../entities/chat/types";
+import type { Chat } from "../../../entities/chat/domainTypes";
 import "./styles/ChatList.css";
 type ChatItemProps = {
     chat : Chat;

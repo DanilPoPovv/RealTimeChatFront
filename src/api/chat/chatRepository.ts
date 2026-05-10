@@ -1,5 +1,5 @@
 import  { apiFetch } from "../apiFetcher";
-import type { Chat } from "../../entities/chat/types";
+import type { Chat } from "../../entities/chat/domainTypes";
 
 
 export function getUserChats() {
