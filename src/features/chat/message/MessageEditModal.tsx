@@ -1,37 +1,34 @@
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import type { MessageEditModalProps } from "../../../entities/viewTypes";
 import "./MessageContextMenu.css"
 export default function MessageEditModal({
     messageText,
     messageId,
-    chatId,
     messageEditCallback,
     onClose
 }: MessageEditModalProps) {
     const messageEditRef = useRef<HTMLDivElement | null>(null);
-
-    useEffect(()=> {
-        function handleClickOutside(e : MouseEvent) {
-            console.log(messageEditRef.current)
-            console.log(e.target as Node)
-            if(messageEditRef.current && !messageEditRef.current.contains(e.target as Node)){
-                            console.log(1313213)
-                onClose();
-            }
+    function handleClickOutside(e: MouseEvent) {
+        if (messageEditRef.current && !messageEditRef.current.contains(e.target as Node)) {
+            onClose();
         }
-        document.addEventListener("mousedown",handleClickOutside);
+    }
+    useEffect(() => {
+
+        document.addEventListener("mousedown", handleClickOutside);
 
 
         return () => {
-            document.removeEventListener("mousedown",handleClickOutside)
+            document.removeEventListener("mousedown", handleClickOutside)
         }
-    },[])
+    }, [])
 
     const [newMessageText, setNewMessageText] = useState(messageText);
     useEffect(() => {
-    setNewMessageText(messageText);
-}, [messageText]);
-    return (
+        setNewMessageText(messageText);
+    }, [messageText]);
+    return createPortal(
         <div className="messsageEditModal" ref={messageEditRef}>
             <input
                 type="text"
@@ -40,16 +37,17 @@ export default function MessageEditModal({
             />
 
             <button
-                onClick={() =>
+                onClick={() => {
                     messageEditCallback(
                         messageId,
-                        chatId,
                         newMessageText
-                    )
-                }
+                    );
+                    onClose();
+                    document.removeEventListener("mousedown", handleClickOutside);
+                }}
             >
                 Изменить
             </button>
         </div>
-    );
+        , document.body);
 }

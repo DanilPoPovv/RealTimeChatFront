@@ -1,14 +1,14 @@
 import ChatWindow from "../features/chat/components/ChatWindow"
 import ChatList from "../features/chat/components/ChatList"
 import MessageContextMenu from "../features/chat/message/MessageContextMenu";
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { signalRService } from "../api/signalR/signalRService";
 import { useChats } from "../features/hooks/useChat";
 import { useChatMessage } from "../features/hooks/useChatMessages";
 import { useChatSignalR } from "../features/hooks/useChatSignalR";
 import { useMessageContextMenu } from "../features/chat/message/UseMessageContextMenu";
-import type { Message } from "../entities/chat/domainTypes";
 import MessageEditModal from "../features/chat/message/MessageEditModal";
+import MessageDeleteModal from "../features/chat/message/MessageDeleteModal";
 export default function ChatPage() {
     const [chatId, serCurrentChatId] = useState<number | null>(null);
 
@@ -22,18 +22,43 @@ export default function ChatPage() {
         setMessageText,
         loadChatMessages,
         sendChatMessage,
-        addChatMessage,
+        updateMessages,
+        deleteMessage,
+        updateChatMessage,
     } = useChatMessage();
 
     const {
         messageContextMenu,
         setMessageContextMenu
     } = useMessageContextMenu();
-    useChatSignalR((message: Message) => {
+   useChatSignalR(
+
+    (message) => {
+
         if (message.chatId !== chatId)
             return;
-        addChatMessage(message);
-    });
+
+        updateMessages(prev => [
+            ...prev,
+            message
+        ]);
+    },
+
+    (message) => {
+        updateMessages(prev =>
+            prev.filter(x => x.id !== message.messageId)
+        );
+    },
+    (message) => {
+        updateMessages(prev =>
+            prev.map(m => 
+                m.id === message.messageId 
+                ? {...m, text : message.message}
+                : m
+            )
+        );
+    }
+);
 
     async function chatClickHandler(chatId: number) {
         await loadChatMessages(chatId)
@@ -88,7 +113,14 @@ export default function ChatPage() {
             {messageContextMenu?.type === "edit" && (
                 <MessageEditModal 
                 {...messageContextMenu}
-                messageEditCallback={() => console.log(123)}
+                messageEditCallback={async (messageId : number, messageText : string) => 
+                    await updateChatMessage(messageId, messageText)}
+                onClose={() => setMessageContextMenu(null)}/>
+            )}
+            {messageContextMenu?.type === "delete" && (
+                <MessageDeleteModal 
+                {...messageContextMenu}
+                messageDeleteCallback={async () =>  await deleteMessage(messageContextMenu.messageId, messageContextMenu.chatId)}
                 onClose={() => setMessageContextMenu(null)}/>
             )}
             <ChatWindow

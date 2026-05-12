@@ -1,4 +1,4 @@
-export async function apiFetch<T>(url : string, options?: RequestInit): Promise<T> {
+export async function apiFetch<T>(url : string, options?: RequestInit): Promise<{data : T; status:number}> {
     const token = localStorage.getItem("token");
     const res = await fetch(url, {
         headers : {
@@ -8,12 +8,15 @@ export async function apiFetch<T>(url : string, options?: RequestInit): Promise<
         },
         ...options
     });
-
+    const data = await res.json().catch(() => null)
     if(!res.ok) {
-        const errorData = await res.json().catch(() => null)
 
         throw new Error(
-            errorData?.error || "Необработанная ошибка");
+            data?.error || "Необработанная ошибка");
     }
-    return res.json();
+    
+    return {
+        data, 
+        status : res.status
+    }
 }

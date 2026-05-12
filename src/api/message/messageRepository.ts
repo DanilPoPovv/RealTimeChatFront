@@ -14,3 +14,17 @@ export function sendMessage(chatId : number, text : string) {
         body : JSON.stringify({text, chatId})
     });
 }
+
+export function deleteMessage(chatId : number, messageId : number){
+    return apiFetch<null>('https://localhost:7110/api/messages', {
+        method: "DELETE",
+        body : JSON.stringify({chatId, messageId})
+    })
+}
+export function updateMessage(messageId : number, text : string) {
+    console.log(messageId, text)
+        return apiFetch<null>('https://localhost:7110/api/messages', {
+        method: "PUT",
+        body : JSON.stringify({messageId, text})
+    })
+}

@@ -13,3 +13,15 @@ export type Message = {
         name: string;
     }
 }
+
+export type MessageDeleteEvent = {
+    chatId: number;
+    messageId: number;
+};
+
+
+export type MessageUpdateEvent = {
+    message : string;
+    messageId : number;
+    ChatId : number;
+}

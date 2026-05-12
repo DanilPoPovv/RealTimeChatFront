@@ -12,7 +12,7 @@ export function LoginPage() {
         try{
         setError(null);
         const response = await loginRequest(login,password);
-        localStorage.setItem("token", response.token);
+        localStorage.setItem("token", response.data.token);
 
         navigate("/Chat")
         }

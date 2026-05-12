@@ -1,5 +1,6 @@
 import * as signalR from "@microsoft/signalr";
-import type { Message } from "../../entities/chat/domainTypes";
+import type { Message, MessageDeleteEvent, MessageUpdateEvent } from "../../entities/chat/domainTypes";
+import type { DO_NOT_USE_OR_YOU_WILL_BE_FIRED_EXPERIMENTAL_CREATE_ROOT_CONTAINERS } from "react-dom/client";
 
 class SignalRService {
   connection = new signalR.HubConnectionBuilder()
@@ -26,6 +27,18 @@ class SignalRService {
 
   onReceiveMessage(callback: (message: Message) => void) {
     this.connection.on("ReceiveMessage", callback);
+  }
+  onDeleteMessage(callback: (messageDeleteEvent: MessageDeleteEvent) => void) {
+    this.connection.on("DeleteMessage", callback);
+  }
+  offDeleteMessage() {
+    this.connection.off("DeleteMessage");
+  }
+  onUpdateMessage(callback : (messageUpdateEvent : MessageUpdateEvent) => void) {
+    this.connection.on("UpdateMessage",callback);
+  }
+  offUpdateMessage(){
+    this.connection.off("UpdateMessage");
   }
 }
 

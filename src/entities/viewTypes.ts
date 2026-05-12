@@ -21,11 +21,14 @@ export type MessageActionState =
     | null;
 
 export type MessageContextMenuProps = {
+    x : number,
+    y : number,
     chatId : number,
     messageId : number,
     messageText : string,
     onEdit : (chatId : number, messageId : number, messageText : string) => void; 
     onDelete : (chatId : number, messageId : number) => void; 
+    onClose : () => void;
 }
 
 export type MessageEditModalProps = {
@@ -34,7 +37,17 @@ export type MessageEditModalProps = {
     chatId: number;
     messageEditCallback: (
         messageId: number,
-        chatId: number,
         messageText: string
     ) => void;
+    onClose : () => void;
 }
+export type MessageDeleteModalProps = {
+    messageId: number;
+    chatId: number;
+    messageDeleteCallback: (
+        messageId: number,
+        chatId: number,
+    ) => void;
+    onClose : () => void;
+}
+

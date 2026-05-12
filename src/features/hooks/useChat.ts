@@ -9,13 +9,13 @@ export function useChats(){
         loadChats();
     }, [])
     async function loadChats() {
-        const userChats = await getUserChats();
-        setChats(userChats);
+        const userChats = (await getUserChats());
+        setChats(userChats.data);
     }
 
     async function searchChatsHandler() {
         if(searchValue){
-            setChats(await searchChats(searchValue));
+            setChats((await searchChats(searchValue)).data);
             return;
         }
         loadChats();
