@@ -1,6 +1,5 @@
 import * as signalR from "@microsoft/signalr";
 import type { Message, MessageDeleteEvent, MessageUpdateEvent } from "../../entities/chat/domainTypes";
-import type { DO_NOT_USE_OR_YOU_WILL_BE_FIRED_EXPERIMENTAL_CREATE_ROOT_CONTAINERS } from "react-dom/client";
 
 class SignalRService {
   connection = new signalR.HubConnectionBuilder()

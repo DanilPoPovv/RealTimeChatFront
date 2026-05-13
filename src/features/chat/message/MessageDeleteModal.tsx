@@ -25,7 +25,9 @@ export default function MessageDeleteModal({
     },[])
 
     return createPortal(
-        <div className="messsageEditModal" ref={messageDeleteRef}>
+        <div className="messageDeleteModal centeredModal" ref={messageDeleteRef}>
+            <div>Вы действительно хотите удалить данное сообщение?</div>
+            <div className="messageDeleteButtonBox">
             <button onClick={() => { 
                 messageDeleteCallback(messageId, chatId)
                 onClose();
@@ -34,6 +36,7 @@ export default function MessageDeleteModal({
                 onClose();
                 document.removeEventListener("mousedown",handleClickOutside);
             }}>Нет</button>
+            </div>
         </div>
     , document.body);
 }

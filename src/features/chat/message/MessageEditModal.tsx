@@ -14,6 +14,7 @@ export default function MessageEditModal({
             onClose();
         }
     }
+    const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
     useEffect(() => {
 
         document.addEventListener("mousedown", handleClickOutside);
@@ -28,14 +29,26 @@ export default function MessageEditModal({
     useEffect(() => {
         setNewMessageText(messageText);
     }, [messageText]);
-    return createPortal(
-        <div className="messsageEditModal" ref={messageEditRef}>
-            <input
-                type="text"
-                value={newMessageText}
-                onChange={(e) => setNewMessageText(e.target.value)}
-            />
+    useEffect(() => {
+    if (textAreaRef.current) {
 
+        textAreaRef.current.style.height =
+            `${textAreaRef.current.scrollHeight}px`;
+    }
+}, [newMessageText]);
+    return createPortal(
+        <div className="messageEditModal centeredModal" ref={messageEditRef}>
+            <textarea
+                ref={textAreaRef}
+                value={newMessageText}
+                onChange={(e) => {
+                    setNewMessageText(e.target.value);
+
+                    e.target.style.height = `${e.target.scrollHeight}px`;
+                }}
+                rows={1}
+                className="messageEditInput"
+            />
             <button
                 onClick={() => {
                     messageEditCallback(
@@ -43,7 +56,6 @@ export default function MessageEditModal({
                         newMessageText
                     );
                     onClose();
-                    document.removeEventListener("mousedown", handleClickOutside);
                 }}
             >
                 Изменить
