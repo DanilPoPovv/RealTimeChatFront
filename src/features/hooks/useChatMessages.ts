@@ -33,6 +33,7 @@ export function useChatMessage() {
     }
     return {
         messages,
+        messageText,
         setMessageText,
         loadChatMessages,
         sendChatMessage,

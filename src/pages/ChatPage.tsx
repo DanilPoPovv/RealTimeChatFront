@@ -25,6 +25,7 @@ export default function ChatPage() {
         updateMessages,
         deleteMessage,
         updateChatMessage,
+        messageText
     } = useChatMessage();
 
     const {
@@ -124,6 +125,7 @@ export default function ChatPage() {
                 onClose={() => setMessageContextMenu(null)}/>
             )}
             <ChatWindow
+                messageInputText={messageText}
                 onMessageRightClick={setMessageContextMenu}
                 messages={messages}
                 onInputMessageChange={setMessageText}
