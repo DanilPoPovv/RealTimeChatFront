@@ -25,7 +25,8 @@ export default function ChatPage() {
         updateMessages,
         deleteMessage,
         updateChatMessage,
-        messageText
+        messageText,
+        loadMoreMessages
     } = useChatMessage();
 
     const {
@@ -135,6 +136,8 @@ export default function ChatPage() {
                     }
                 }}
                 onEnterKeyDown={sendMessageEnterDown}
+                onLoadMoreMessage={async() => { if(chatId){loadMoreMessages(chatId)}}}
+                chatId={chatId}
             />
         </div>
     )

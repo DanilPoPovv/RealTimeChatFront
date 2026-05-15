@@ -1,8 +1,12 @@
 import type { Message } from "../../entities/chat/domainTypes";
 import  { apiFetch } from "../apiFetcher";
 
-export function getChatMessages(chatId : number) {
-    return apiFetch<Message[]>(`https://localhost:7110/api/messages/chat/${chatId}`, {
+export function getChatMessages(chatId : number, beforeMessageId : number | null = null) {
+    var baseUrl = `https://localhost:7110/api/messages/chat/${chatId}?limit=100`
+    if (beforeMessageId){
+        baseUrl = baseUrl + `&beforeMessageId=${beforeMessageId}`
+    }
+    return apiFetch<Message[]>(baseUrl, {
     method: "GET",
 });
 }
@@ -22,7 +26,6 @@ export function deleteMessage(chatId : number, messageId : number){
     })
 }
 export function updateMessage(messageId : number, text : string) {
-    console.log(messageId, text)
         return apiFetch<null>('https://localhost:7110/api/messages', {
         method: "PUT",
         body : JSON.stringify({messageId, text})

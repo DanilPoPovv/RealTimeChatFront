@@ -1,9 +1,11 @@
 import type { Message } from "../../entities/chat/domainTypes";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { getChatMessages, sendMessage, deleteMessage, updateMessage } from "../../api/message/messageRepository";
 export function useChatMessage() {
     const [messages, setMessages] = useState<Message[]>([]);
     const [messageText, setMessageText] = useState<string>("");
+    const [hasMore, setHasMore] = useState(true);
+    const isLoadingMoreRef = useRef<boolean>(false);
     async function loadChatMessages(chatId: number) {
         setMessages((await getChatMessages(chatId)).data);
     }
@@ -24,12 +26,28 @@ export function useChatMessage() {
     ) {
         setMessages(updater);
     }
-    async function deleteChatMessage(messageId : number, chatId : number){
-        deleteMessage(chatId,messageId);
+    async function deleteChatMessage(messageId: number, chatId: number) {
+        deleteMessage(chatId, messageId);
     }
-    async function updateChatMessage(messageId : number, text : string) {
+    async function updateChatMessage(messageId: number, text: string) {
         console.log(messageId, text);
         updateMessage(messageId, text);
+    }
+    async function loadMoreMessages(chatId: number) {
+        if (!hasMore || isLoadingMoreRef.current) return;
+        isLoadingMoreRef.current = true;
+        const oldestMessageId = messages.length > 0 ? messages[0].id : null;
+        const moreMessage = (await getChatMessages(chatId, oldestMessageId)).data
+        if (moreMessage.length === 0) {
+            isLoadingMoreRef.current = false;
+            setHasMore(false)
+            return;
+        }
+        setMessages(prev => [
+            ...moreMessage,
+            ...prev
+        ]);
+        isLoadingMoreRef.current = false;
     }
     return {
         messages,
@@ -41,6 +59,7 @@ export function useChatMessage() {
         addChatMessage,
         deleteMessage: deleteChatMessage,
         updateMessages,
-        updateChatMessage
+        updateChatMessage,
+        loadMoreMessages
     }
 }
