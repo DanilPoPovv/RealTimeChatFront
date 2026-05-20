@@ -1,8 +1,10 @@
+import type { User } from "../../entities/chat/domainTypes";
 import  { apiFetch } from "../apiFetcher";
 
 type LoginResponse = 
 {
     token : string;
+    userDto : User
 }
 export function loginRequest(login : string, password :string){
     return apiFetch<LoginResponse>("https://localhost:7110/api/auth/login", {

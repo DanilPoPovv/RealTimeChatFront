@@ -8,11 +8,13 @@ type ChatListProps = {
     onChatSearchChange : (chatName : string) => void;
     onChatSearhEnterDown : (keyName : string) => void;
     selectedChatId : number | null ;
+    onUserMenuOpen : () => void;
 }
 export default function ChatList(chatListProps : ChatListProps){
     return (
     <div className="chatList">
         <ChatSearchLabel 
+        onUserMenuOpen={chatListProps.onUserMenuOpen}
         onChatSearchChange={chatListProps.onChatSearchChange}
         onEnterKeyDown={chatListProps.onChatSearhEnterDown}/>
         {chatListProps.chats.map(

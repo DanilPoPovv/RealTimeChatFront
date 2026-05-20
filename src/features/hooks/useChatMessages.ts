@@ -6,6 +6,7 @@ export function useChatMessage() {
     const [messageText, setMessageText] = useState<string>("");
     const [hasMore, setHasMore] = useState(true);
     const isLoadingMoreRef = useRef<boolean>(false);
+    ///TODO : Когда будет не лень вынести некоторые функции в отдельные хуки
     async function loadChatMessages(chatId: number) {
         setMessages((await getChatMessages(chatId)).data);
     }

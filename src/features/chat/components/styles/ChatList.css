@@ -25,12 +25,24 @@
     height: 60%;
     width: 95%;
     border: none;
-    margin-top: 5px;
-    margin-left: 6px;
+    margin-top: 0px;
+    margin-left: 3px;
+    padding: 5px;
     border-radius: 10px;
     border: 1px solid transparent;
 }
 
 .chatSearchLabel {
-    height: 30px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+}
+
+.menuButton {
+    background-color: rgb(3, 32, 58);
+    font-size: 30px;
+    border: none;
+    padding-bottom: 6px;
+    width: 30px;
+    color: rgb(119, 111, 111);
 }

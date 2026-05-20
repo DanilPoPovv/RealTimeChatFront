@@ -23,5 +23,10 @@ export type MessageDeleteEvent = {
 export type MessageUpdateEvent = {
     message : string;
     messageId : number;
-    ChatId : number;
+    chatId : number;
+}
+export type User ={
+    id : number;
+    name : string;
+    avatarUrl? : string;
 }
